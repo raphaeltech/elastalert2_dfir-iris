@@ -1,0 +1,30 @@
+elastalert --config /media/raphael/DEV/projetos-solor/elastalert2/config/config-5m.yml --rule /media/raphael/DEV/projetos-solor/elastalert2/rules/fowarding-alerts-dfir-iris-v4.yml --verbose
+
+
+
+###### systemd #######
+[Unit]
+Description=elastalert-5m
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/elastalert --config /opt/elastalert2/config/config-5m.yml --verbose
+Restart=always
+PIDFile=/tmp/elastalert_pid
+
+[Install]
+WantedBy=multi-user.target
+~
+
+
+##### /usr/local/bin/elastalert #####
+
+#!/usr/bin/python3.11
+# -*- coding: utf-8 -*-
+import re
+import sys
+from elastalert.elastalert import main
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.exit(main())
+
